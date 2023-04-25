@@ -1,0 +1,17 @@
+name: hmflutter
+repository: https://github.com/gratien-humaapi/hmflutter
+
+packages:
+  - packages/*
+
+command:
+  # version:
+    # Generate commit links in package changelogs.
+    # linkToCommits: true
+
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  analyze:
+    exec: dart analyze .
