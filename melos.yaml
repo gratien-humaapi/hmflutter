@@ -15,3 +15,6 @@ command:
 scripts:
   analyze:
     exec: dart analyze .
+
+  outdated:
+    exec: flutter pub outdated
