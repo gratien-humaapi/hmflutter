@@ -36,7 +36,6 @@ class InputWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? helperText = fieldMeta.helperText;
     // final inputType = fieldMeta.type;
     // final control = form.control(props['fieldKey'] as String);
     return ReactiveValueListenableBuilder(
@@ -74,7 +73,8 @@ class InputWrapper extends StatelessWidget {
 }
 
 class HMReactiveForm extends StatelessWidget {
-  HMReactiveForm({super.key, 
+  HMReactiveForm({
+    super.key,
     required this.form,
     required this.fieldMeta,
     required this.decoratedWidget,

@@ -107,7 +107,7 @@ class HMMultiSelect extends HookWidget {
     final valueList = useState(selectedValues);
 
     useEffect(() {
-      print('change');
+      // print('change');
       return null;
     }, [valueList.value]);
 
@@ -273,7 +273,7 @@ class _SelectPannel extends HookWidget {
         ),
         if (hasDivider)
           Divider(color: outlineColor.withOpacity(0.5), height: 1),
-        Container(
+        SizedBox(
           child: ListView.builder(
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),

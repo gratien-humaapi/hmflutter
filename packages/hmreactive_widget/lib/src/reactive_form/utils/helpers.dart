@@ -113,7 +113,7 @@ FormGroup buildForm(List<FieldMeta> fieldsMetaList) {
 
       // print(form.value);
     } else if (check == item.fieldKey) {
-      print('doublon');
+      // print('doublon');
     } else {
       // print("chemin: $check");
       String input = item.fieldKey.split('$check.').join('.');
@@ -122,7 +122,7 @@ FormGroup buildForm(List<FieldMeta> fieldsMetaList) {
           input: input,
           // defaultVal: getDefaultValue(split2),
           options: item.options);
-      print("a: ${a.value}");
+      // print("a: ${a.value}");
       (form.control(check) as FormGroup)
           .addAll(a.controls as Map<String, AbstractControl<dynamic>>);
     }

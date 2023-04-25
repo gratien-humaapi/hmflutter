@@ -191,7 +191,7 @@ class _SelectPannel extends HookWidget {
     final showClearButton = useState(false);
     final controller = useTextEditingController(text: initialValue);
     // Call when value change
-    void _onChangedField(String value) {
+    void onChangedField(String value) {
       showClearButton.value = value.isNotEmpty;
       final List<String> options = optionsBuilder(value
           // controller.text,
@@ -204,7 +204,7 @@ class _SelectPannel extends HookWidget {
     useEffect(() {
       // showClearButton.value = controller.text.isNotEmpty;
       // print('showCloseButton ${showClearButton.value}');
-      _onChangedField(initialValue);
+      onChangedField(initialValue);
       return null;
     }, []);
 
@@ -212,16 +212,16 @@ class _SelectPannel extends HookWidget {
     //   showClearButton.value = controller.value.text.isNotEmpty;
     //   print(showClearButton.value);
     //   // if (controller.value.text != value.value) value.value = "";
-    //   _onChangedField();
+    //   onChangedField();
     // });
 
-    // _onChangedField(initialValue);
+    // onChangedField(initialValue);
 
     return Column(
       children: <Widget>[
         if (fieldViewBuilder != null)
           fieldViewBuilder!(
-              context, controller, showClearButton.value, _onChangedField)
+              context, controller, showClearButton.value, onChangedField)
         else
           AppBar(
             automaticallyImplyLeading: false,
@@ -261,8 +261,8 @@ class _SelectPannel extends HookWidget {
                             EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                       ),
                       onChanged: (value) {
-                        _onChangedField(value);
-                        // _onChangedField(
+                        onChangedField(value);
+                        // onChangedField(
                         //   value,
                         // );
                       },
@@ -278,7 +278,7 @@ class _SelectPannel extends HookWidget {
                         ),
                         onTap: () {
                           controller.clear();
-                          _onChangedField('');
+                          onChangedField('');
                         },
                       ),
                     )

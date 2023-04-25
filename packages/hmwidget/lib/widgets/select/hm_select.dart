@@ -120,7 +120,7 @@ class HMSelect extends HookWidget {
         ),
         if (hasDivider)
           Divider(color: outlineColor.withOpacity(0.5), height: 1),
-        Container(
+        SizedBox(
           child: ListView.builder(
             padding: EdgeInsets.zero,
             physics: const BouncingScrollPhysics(),
@@ -161,7 +161,7 @@ class HMSelect extends HookWidget {
               return GestureDetector(
                 onTap: () {
                   if (selectList[index] != value) {
-                    print('$index, $value');
+                    // print('$index, $value');
                     onChanged(selectList[index]);
                     Navigator.pop(context);
                   }

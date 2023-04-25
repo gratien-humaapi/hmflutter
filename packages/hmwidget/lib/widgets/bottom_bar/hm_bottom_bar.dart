@@ -6,7 +6,7 @@ import 'scrollcontroller_provider.dart';
 class HMBottomNavBar extends HookWidget {
   HMBottomNavBar({
     this.principalButtonSize,
-    required List<Widget> tabItems,
+    required this.tabItems,
     required this.child,
     required this.onTap,
     this.currentPage = 0,
@@ -22,17 +22,11 @@ class HMBottomNavBar extends HookWidget {
     this.alignment,
     this.onBottomBarShown,
     this.principalButton,
-    this.principalButtonIndex,
+    int? principalButtonIndex,
     this.onBottomBarHidden,
     super.key,
   }) {
-    principalButtonIndex ??= tabItems.length ~/ 2;
-    items = List.from(tabItems)
-      ..insert(
-          principalButtonIndex!,
-          Tab(
-            icon: Container(),
-          ));
+    _principalButtonIndex = principalButtonIndex ?? tabItems.length ~/ 2;
   }
   // final ScrollController scrollController;
   final int currentPage;
@@ -45,6 +39,7 @@ class HMBottomNavBar extends HookWidget {
   final Curve curve;
   final double? width;
   final BoxShadow? boxShadow;
+  final List<Widget> tabItems;
   final double? height;
   final BorderRadius? radius;
   final Widget? principalButton;
@@ -52,34 +47,7 @@ class HMBottomNavBar extends HookWidget {
   final Function()? onBottomBarShown;
   final Function()? onBottomBarHidden;
   final double? principalButtonSize;
-  int? principalButtonIndex;
-
-  List<Widget> items = [];
-
-  void showBottomBar(AnimationController controller) {
-    controller.forward();
-
-    if (onBottomBarShown != null) {
-      onBottomBarShown!();
-    }
-  }
-
-  int? _getIndex(int index) {
-    if (index == principalButtonIndex) {
-      return null;
-    }
-
-    final newIndex = index > principalButtonIndex! ? index - 1 : index;
-    return newIndex;
-  }
-
-  void hideBottomBar(AnimationController controller) {
-    controller.reverse();
-
-    if (onBottomBarHidden != null) {
-      onBottomBarHidden!();
-    }
-  }
+  late final int _principalButtonIndex;
 
   // void changePage(ValueNotifier<int> currentPage, int newPage) {
   //   currentPage.value = newPage;
@@ -88,12 +56,7 @@ class HMBottomNavBar extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final scrollController = useState(ScrollController());
-
-    // useAutomaticKeepAlive();
-
-    // final tabController = useTabController(
-    //     initialLength: items.length, initialIndex: currentPage);
-
+    final isScrollingDown = useState(false);
     final controller = useAnimationController(duration: duration);
     final offsetAnimation = useState(Tween<Offset>(
       begin: const Offset(0, 10),
@@ -103,24 +66,44 @@ class HMBottomNavBar extends HookWidget {
       curve: curve,
     )));
 
-    final isScrollingDown = useState(false);
+    // useAutomaticKeepAlive();
+    List<Widget> items = [];
 
-    // scrollController.value.addListener(() {
-    //   // if (scrollController.value.position.userScrollDirection ==
-    //   //     ScrollDirection.reverse) {
-    //   //   // if (!isScrollingDown.value) {
-    //   //   isScrollingDown.value = true;
-    //   //   hideBottomBar(controller);
-    //   //   // }
-    //   // }
-    //   // if (scrollController.value.position.userScrollDirection ==
-    //   //     ScrollDirection.forward) {
-    //   //   if (isScrollingDown.value) {
-    //   //     isScrollingDown.value = false;
-    //   //     showBottomBar(controller);
-    //   //   }
-    //   // }
-    // });
+// Add principal button in tabItems list
+    items = List.from(tabItems)
+      ..insert(
+          _principalButtonIndex,
+          Tab(
+            icon: Container(),
+          ));
+
+    // Show the bottomBar
+    void showBottomBar(AnimationController controller) {
+      controller.forward();
+      if (onBottomBarShown != null) {
+        onBottomBarShown!();
+      }
+    }
+
+    // Calculate the index to ignore that of the main button
+    int? getIndex(int index) {
+      if (index == _principalButtonIndex) {
+        return null;
+      }
+      final newIndex = index > _principalButtonIndex ? index - 1 : index;
+      return newIndex;
+    }
+
+    // Hide the bottomBar
+    void hideBottomBar(AnimationController controller) {
+      controller.reverse();
+      if (onBottomBarHidden != null) {
+        onBottomBarHidden!();
+      }
+    }
+
+    // final tabController = useTabController(
+    //     initialLength: items.length, initialIndex: currentPage);
 
     controller.forward();
 
@@ -133,13 +116,13 @@ class HMBottomNavBar extends HookWidget {
           if (scrollNotification.scrollDelta! < 0 &&
               scrollNotification.metrics.axis == Axis.vertical) {
             // User is scrolling down
-            print('scrolling down...');
+            // print('scrolling down...');
             isScrollingDown.value = false;
             showBottomBar(controller);
           } else if (scrollNotification.scrollDelta! > 0 &&
               scrollNotification.metrics.axis == Axis.vertical) {
             // User is scrolling up
-            print('scrolling up...');
+            // print('scrolling up...');
             isScrollingDown.value = true;
             hideBottomBar(controller);
           }
@@ -223,7 +206,7 @@ class HMBottomNavBar extends HookWidget {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
-                                  final newIndex = _getIndex(i);
+                                  final newIndex = getIndex(i);
                                   if (newIndex == null) {
                                     return;
                                   }

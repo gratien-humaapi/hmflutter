@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reactive_forms/src/models/models.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 import 'fieldmeta.dart';
 

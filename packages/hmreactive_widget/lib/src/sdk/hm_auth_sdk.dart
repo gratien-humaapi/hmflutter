@@ -149,7 +149,7 @@ class HMAuthSDK {
 
   newPasswordRequired(String username, String newPassword) async {
     if (sessionflow.isEmpty) {
-      print('session is invalid, please sign-in again');
+      // print('session is invalid, please sign-in again');
       return;
     }
 
@@ -219,7 +219,7 @@ class HMAuthSDK {
       return response(data);
       // return res;
     } catch (error) {
-      print(error);
+      // print(error);
       return errorResponse(error);
     }
   }

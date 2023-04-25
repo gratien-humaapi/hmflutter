@@ -77,15 +77,11 @@ class HMSwitch extends HookWidget {
     ];
     return Visibility(
         visible: !hidden,
-        child: Container(
-          // color: Colors.red,
-          // height: getTrackSize(switchSize),
-          child: Row(
-            mainAxisAlignment: reversed
-                ? MainAxisAlignment.spaceBetween
-                : MainAxisAlignment.start,
-            children: reversed ? children.reversed.toList() : children,
-          ),
+        child: Row(
+          mainAxisAlignment: reversed
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.start,
+          children: reversed ? children.reversed.toList() : children,
         ));
   }
 

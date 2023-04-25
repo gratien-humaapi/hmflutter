@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../iconbutton/hm_iconbutton.dart';
 
 class CameraPage extends StatefulWidget {
-  CameraPage({super.key, required this.cameras});
-  List<CameraDescription> cameras;
+  const CameraPage({super.key, required this.cameras});
+  final List<CameraDescription> cameras;
 
   @override
   State<CameraPage> createState() => _CameraPageState();
