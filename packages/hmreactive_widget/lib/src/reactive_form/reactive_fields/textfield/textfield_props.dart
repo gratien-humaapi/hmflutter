@@ -3,10 +3,10 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class TextFieldProps extends ActionsPropsBase {
+class TextFieldProps extends PropsBase {
   TextFieldProps(
-      {bool disabled = false,
-      bool hidden = false,
+      {super.disabled,
+      super.hidden,
       this.hintText,
       this.value = "",
       this.iconColor,
@@ -31,8 +31,7 @@ class TextFieldProps extends ActionsPropsBase {
       this.isRequired = false,
       this.variant,
       this.size,
-      this.radius})
-      : super(disabled, hidden);
+      this.radius});
   final String? hintText;
   final String value;
   final String? label;

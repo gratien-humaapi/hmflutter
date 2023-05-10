@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
 
+/// The widget that displays the label above the field,
+/// for example:
+///
+/// ```dart
+/// Column(
+///   children: [
+///     InputLabel(
+///       text: "Username",
+///       isRequired: true,
+///     ),
+///     TextField(
+///       decoration: InputDecoration(border: OutlineInputBorder()),
+///     ),
+///   ],
+/// )
+/// ```
 class InputLabel extends StatelessWidget {
+  /// The text to display
   final String? text;
+
+  /// Indicates whether the field is required or not,
+  /// if `true` an asterisk is placed in front of the text.
   final bool isRequired;
+
+  /// The label text size
   final double? fontSize;
   const InputLabel({
     Key? key,
@@ -13,14 +35,14 @@ class InputLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return text != null
+    final Widget label = text != null
         ? RichText(
             text: TextSpan(
               text: '$text ',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: fontSize,
-                // fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
               ),
               children: <TextSpan>[
                 isRequired
@@ -30,6 +52,7 @@ class InputLabel extends StatelessWidget {
               ],
             ),
           )
-        : Container();
+        : const SizedBox();
+    return label;
   }
 }

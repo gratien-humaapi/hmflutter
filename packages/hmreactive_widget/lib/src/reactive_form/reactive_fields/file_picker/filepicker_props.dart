@@ -2,14 +2,14 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class FilePickerProps extends ActionsPropsBase {
+class FilePickerProps extends PropsBase {
   FilePickerProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     required this.fileViewInModal,
     required this.isMultipleFiles,
     this.onChange,
-  }) : super(disabled, hidden);
+  });
   final bool fileViewInModal;
   final bool isMultipleFiles;
   final void Function(List<PlatformFile> files)? onChange;

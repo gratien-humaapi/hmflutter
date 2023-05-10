@@ -10,6 +10,7 @@ class HMFormBuilder {
               bool Function(AbstractControl<Object?> control)? showErrors)>
       fieldMap = {};
 
+  /// Called when you want to retrieve a field.
   getField(FieldMeta fieldMeta,
       bool Function(AbstractControl<Object?> control)? showErrors) {
     final inputType = fieldMeta.customProps.runtimeType;
@@ -22,6 +23,7 @@ class HMFormBuilder {
     return widget;
   }
 
+  /// Called to register a field, so that it can be used.
   defineWidget(
       Type inputType,
       Widget Function(FieldMeta props,

@@ -13,11 +13,8 @@ class InputWrapper extends StatelessWidget {
 
   bool _showErrors(AbstractControl<Object?> control) {
     if (showErrors != null) {
-      // print("!=dddd");
       return showErrors!(control as FormControl);
     }
-
-    // print("here valueodsjofo");
     return true;
   }
 
@@ -136,7 +133,7 @@ class HMReactiveForm extends StatelessWidget {
                           for (var fieldMeta in gelement.fieldsMeta) ...[
                             InputLabel(
                               text: fieldMeta.label,
-                              isRequired: fieldMeta.isRequired ?? false,
+                              isRequired: fieldMeta.options.isNotEmpty,
                             ),
                             const SizedBox(height: 5),
                             builder.getField(fieldMeta, showErrors),

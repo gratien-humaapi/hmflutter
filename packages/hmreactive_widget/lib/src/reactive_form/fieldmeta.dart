@@ -24,21 +24,17 @@ class FieldGroup {
 class FieldMeta<T> {
   String fieldKey;
   String? label;
-  // String type;
   Map<String, ValidationMessageFunction>? validationMessages;
   String? fieldName;
   String? helperText;
   bool subscribe = true;
-  bool? isRequired;
   dynamic defaultValue;
   List<Map<String, dynamic>? Function(AbstractControl<dynamic>)> options;
   T? customProps;
   FieldMeta(
       {required this.fieldKey,
       this.label,
-      // required this.type,
       this.fieldName,
-      this.isRequired,
       this.validationMessages,
       required this.subscribe,
       required this.options,

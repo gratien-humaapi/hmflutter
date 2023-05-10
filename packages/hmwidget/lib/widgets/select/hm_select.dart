@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -24,8 +26,11 @@ class HMSelect extends HookWidget {
     this.size,
     this.selectedItemStyle,
     required this.selectionPageTitle,
-    this.selectIconColor,
     this.selectedBgColor,
+    this.selectIconColor,
+    this.modalBlur,
+    this.onClose,
+    this.modalBackgroundColor,
     this.modalRadius,
     this.closeIcon,
     this.hintText,
@@ -48,7 +53,9 @@ class HMSelect extends HookWidget {
   final bool hasDivider;
   final Widget? closeIcon;
   final Color? selectIconColor;
+  final ImageFilter? modalBlur;
   final Color? overlayColor;
+  final Color? modalBackgroundColor;
   final double? modalRadius;
   final Color? selectedBgColor;
   final Widget selectionPageTitle;
@@ -61,6 +68,7 @@ class HMSelect extends HookWidget {
   ///and `"false"`to put the icon to end.
   final bool? selectIconAtLeft;
   final void Function(dynamic value) onChanged;
+  final void Function()? onClose;
 
   double _getTextSize(HMSelectSize size) {
     switch (size) {
@@ -131,10 +139,12 @@ class HMSelect extends HookWidget {
               final bool isSelected = value == selectList[index];
               final List<Widget> children = [
                 Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: iconAtLeft ? 0.0 : 20),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: iconAtLeft ? 0.0 : 20,
+                        right: !iconAtLeft ? 20 : 0.0),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
                       child: Text(
                         '${selectList[index]}',
                         overflow: TextOverflow.ellipsis,
@@ -205,6 +215,9 @@ class HMSelect extends HookWidget {
       absorbing: disabled,
       child: DetailsPage(
         radius: modalRadius,
+        backgroundColor: modalBackgroundColor,
+        blur: modalBlur,
+        onClose: onClose,
         overlayColor: overlayColor ?? selectTheme?.overlayColor,
         destinationPage: _styledSelectPannel(
           selectSize: selectSize,

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../props_base.dart';
 
-class ColorPickerProps extends ActionsPropsBase {
+class ColorPickerProps extends PropsBase {
   ColorPickerProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     this.displayThumbColor = true,
     this.portraitOnly = false,
     this.enableAlpha = false,
@@ -13,7 +13,7 @@ class ColorPickerProps extends ActionsPropsBase {
     this.hueRingStrokeWidth = 20.0,
     this.colorPickerHeight = 250.0,
     this.onChange,
-  }) : super(disabled, hidden);
+  });
   final bool displayThumbColor;
   final bool enableAlpha;
   final void Function(Color color)? onChange;

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -31,6 +33,9 @@ class HMMultiSelect extends HookWidget {
       this.hintText,
       this.direction = Axis.horizontal,
       this.modalRadius,
+      this.onClose,
+      this.modalBackgroundColor,
+      this.modalBlur,
       this.isModalView = true,
       this.hasDivider = true,
       required this.selectListItem,
@@ -53,10 +58,13 @@ class HMMultiSelect extends HookWidget {
   final Color? overlayColor;
   final HMRadius? radius;
   final Widget? selectIcon;
+  final ImageFilter? modalBlur;
   final Widget? closeIcon;
+  final Color? modalBackgroundColor;
   final Axis direction;
   final double? modalRadius;
   final bool hasDivider;
+  final void Function()? onClose;
   final void Function(int index) onSelectedValuePressed;
   final Widget? inputIcon;
   final Color? selectIconColor;
@@ -117,6 +125,8 @@ class HMMultiSelect extends HookWidget {
         child: DetailsPage(
           overlayColor: overlayColor ?? multiSelectTheme?.overlayColor,
           radius: modalRadius,
+          backgroundColor: modalBackgroundColor,
+          blur: modalBlur,
           destinationPage: _SelectPannel(
             selectSize: selectSize,
             selectBoxRadius: selectBoxRadius,

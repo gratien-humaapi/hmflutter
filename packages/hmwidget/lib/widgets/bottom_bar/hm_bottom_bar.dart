@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'scrollcontroller_provider.dart';
 
-class HMBottomNavBar extends HookWidget {
-  HMBottomNavBar({
+class HMLayout extends HookWidget {
+  HMLayout({
     this.principalButtonSize,
     required this.tabItems,
     required this.child,
     required this.onTap,
-    this.currentPage = 0,
+    this.currentindex = 0,
     this.bottomBarColor,
     this.selectedItemColor,
     this.unselectedItemColor,
@@ -29,7 +30,7 @@ class HMBottomNavBar extends HookWidget {
     _principalButtonIndex = principalButtonIndex ?? tabItems.length ~/ 2;
   }
   // final ScrollController scrollController;
-  final int currentPage;
+  final int currentindex;
   final Color? bottomBarColor;
   final Color? selectedItemColor;
   final Widget child;
@@ -55,7 +56,7 @@ class HMBottomNavBar extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scrollController = useState(ScrollController());
+    final scrollController = useScrollController();
     final isScrollingDown = useState(false);
     final controller = useAnimationController(duration: duration);
     final offsetAnimation = useState(Tween<Offset>(
@@ -66,7 +67,6 @@ class HMBottomNavBar extends HookWidget {
       curve: curve,
     )));
 
-    // useAutomaticKeepAlive();
     List<Widget> items = [];
 
 // Add principal button in tabItems list
@@ -102,6 +102,19 @@ class HMBottomNavBar extends HookWidget {
       }
     }
 
+    scrollController.addListener(() {
+      if (scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        // L'utilisateur fait défiler vers le bas
+        isScrollingDown.value = true;
+        hideBottomBar(controller);
+      } else if (scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        // L'utilisateur fait défiler vers le haut
+        isScrollingDown.value = false;
+        showBottomBar(controller);
+      }
+    });
     // final tabController = useTabController(
     //     initialLength: items.length, initialIndex: currentPage);
 
@@ -110,31 +123,32 @@ class HMBottomNavBar extends HookWidget {
     final double tabWidth = width ?? MediaQuery.of(context).size.width * 0.9;
 
     return NotificationListener<ScrollNotification>(
-      onNotification: (scrollNotification) {
-        if (scrollNotification is ScrollUpdateNotification) {
-          // Check the direction of the scroll
-          if (scrollNotification.scrollDelta! < 0 &&
-              scrollNotification.metrics.axis == Axis.vertical) {
-            // User is scrolling down
-            // print('scrolling down...');
-            isScrollingDown.value = false;
-            showBottomBar(controller);
-          } else if (scrollNotification.scrollDelta! > 0 &&
-              scrollNotification.metrics.axis == Axis.vertical) {
-            // User is scrolling up
-            // print('scrolling up...');
-            isScrollingDown.value = true;
-            hideBottomBar(controller);
-          }
-        }
-        return true;
-      },
+      // onNotification: (scrollNotification) {
+      //   if (scrollNotification is ScrollUpdateNotification) {
+      //     // print(scrollNotification.metrics.!);
+      //     if (scrollNotification.metrics.axis == Axis.vertical) {
+      //       // Check the direction of the scroll
+      //       if ((scrollNotification.scrollDelta! <= 0)) {
+      //         // User is scrolling down
+      //         print('scrolling up...');
+      // isScrollingDown.value = false;
+      // showBottomBar(controller);
+      //       } else if (scrollNotification.scrollDelta! > 0) {
+      //         // User is scrolling up
+      //         print('scrolling down...');
+      // isScrollingDown.value = true;
+      // hideBottomBar(controller);
+      //       }
+      //     }
+      //   }
+      //   return false;
+      // },
       child: Stack(
         fit: StackFit.expand,
         alignment: Alignment.bottomCenter,
         children: [
           InheritedDataProvider(
-            scrollController: scrollController.value,
+            scrollController: scrollController,
             child: child,
           ),
           // Positioned(
@@ -174,60 +188,59 @@ class HMBottomNavBar extends HookWidget {
           //         ),
           //       ),
           //     )),
+
           Align(
             alignment: alignment ?? const Alignment(0, 0.95),
-            child: SlideTransition(
-              position: offsetAnimation.value,
-              child: Container(
-                width: tabWidth,
-                height: height ?? 59,
-                decoration: BoxDecoration(
-                  color: bottomBarColor ?? Colors.white,
-                  borderRadius: radius ?? BorderRadius.circular(50),
-                  boxShadow: [
-                    boxShadow ??
-                        BoxShadow(
-                          color: const Color(0xffA0A0A0).withOpacity(0.5),
-                          offset: const Offset(0, 3),
-                          blurRadius: 18,
-                        ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    fit: StackFit.expand,
-                    children: [
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          for (int i = 0; i < items.length; i++) ...[
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  final newIndex = getIndex(i);
-                                  if (newIndex == null) {
-                                    return;
-                                  }
+            child: AnimatedContainer(
+              duration: duration,
+              width: tabWidth,
+              height: isScrollingDown.value ? 0 : height ?? 59,
+              decoration: BoxDecoration(
+                color: bottomBarColor ?? Colors.white,
+                borderRadius: radius ?? BorderRadius.circular(50),
+                boxShadow: [
+                  boxShadow ??
+                      BoxShadow(
+                        color: const Color(0xffA0A0A0).withOpacity(0.5),
+                        offset: const Offset(0, 3),
+                        blurRadius: 18,
+                      ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Stack(
+                  alignment: Alignment.center,
+                  fit: StackFit.expand,
+                  children: [
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        for (int i = 0; i < items.length; i++) ...[
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                final newIndex = getIndex(i);
+                                if (newIndex == null) {
+                                  return;
+                                }
 
-                                  onTap(newIndex);
-                                },
-                                child: Container(
-                                  color: Colors.white.withOpacity(0.005),
-                                  child: items[i],
-                                ),
+                                onTap(newIndex);
+                              },
+                              child: InkResponse(
+                                // col: Colors.white.withOpacity(0.005),
+                                child: items[i],
                               ),
                             ),
-                          ]
-                        ],
-                      ),
-                      Center(
-                        widthFactor: 1.0,
-                        child: principalButton,
-                      ),
-                    ],
-                  ),
+                          ),
+                        ]
+                      ],
+                    ),
+                    Center(
+                      widthFactor: 1.0,
+                      child: principalButton,
+                    ),
+                  ],
                 ),
               ),
             ),

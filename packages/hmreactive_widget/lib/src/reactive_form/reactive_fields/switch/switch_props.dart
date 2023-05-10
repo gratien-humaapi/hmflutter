@@ -3,10 +3,10 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class SwitchProps extends ActionsPropsBase {
+class SwitchProps extends PropsBase {
   SwitchProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     this.duration,
     this.onLabel,
     this.offLabel,
@@ -18,7 +18,7 @@ class SwitchProps extends ActionsPropsBase {
     this.radius,
     // required this.value,
     this.onChange,
-  }) : super(disabled, hidden);
+  });
   final Duration? duration;
   final String? onLabel;
   final String? offLabel;

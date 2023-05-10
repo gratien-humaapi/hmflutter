@@ -3,10 +3,10 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class RadioProps extends ActionsPropsBase {
+class RadioProps extends PropsBase {
   RadioProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     required this.radioList,
     this.size,
     this.value,
@@ -16,7 +16,7 @@ class RadioProps extends ActionsPropsBase {
     this.radioColor = const Color.fromARGB(255, 121, 80, 242),
     this.onChange,
     this.isToggleable = false,
-  }) : super(disabled, hidden);
+  });
   final HMRadioSize? size;
   final Color? radioColor;
   final Color? textColor;

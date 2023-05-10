@@ -22,6 +22,7 @@ class HMSelectBadge extends HookWidget {
     this.deleteIconColor,
     required this.selectedList,
     required this.onDeleted,
+    this.height,
     required this.onTap,
     this.showDeleteIcon = true,
   });
@@ -36,6 +37,7 @@ class HMSelectBadge extends HookWidget {
   final void Function(int index) onTap;
   final bool? isFilled;
   final Axis direction;
+  final double? height;
   final Color? textColor;
   final Color? deleteIconColor;
   final Widget? deleteIcon;
@@ -53,41 +55,35 @@ class HMSelectBadge extends HookWidget {
     required HMRadius badgeRadius,
     required Color delIconColor,
   }) {
-    return SizedBox(
-      height: 150,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: height ?? 100),
+      // height: height ?? 100,
       child: SingleChildScrollView(
         scrollDirection: direction,
-        // padding: const EdgeInsets.symmetric(vertical: 10),
-        physics: const BouncingScrollPhysics(),
         child: Wrap(
-          // spacing: 25,
-          runSpacing: 10,
+          spacing: 8.0, // gap between adjacent chips
+          runSpacing: 4.0, // gap between lines
           children: List.generate(selectedList.length, (index) {
             final HMSelectedItem item = selectedList[index];
             final Widget label = item.label;
-            return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: InputChip(
-                visualDensity: VisualDensity.compact,
-                avatar: item.avatar,
-                labelPadding: const EdgeInsets.symmetric(horizontal: 2),
-                label: label,
-                deleteIcon: disabled ? null : deleteIcon,
-                deleteIconColor: delIconColor,
-                disabledColor: const Color(0x16000000),
-                backgroundColor:
-                    isFilledBagde ? badgeColor : Colors.transparent,
-                side: BorderSide(
-                    color: outlineColor,
-                    style:
-                        isFilledBagde ? BorderStyle.none : BorderStyle.solid),
-                elevation: 0.0,
-                pressElevation: 0.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(badgeRadius.value)),
-                onDeleted: disabled ? null : () => onDeleted(item.value),
-                onPressed: () => onTap(index),
-              ),
+            return InputChip(
+              visualDensity: VisualDensity.compact,
+              avatar: item.avatar,
+              labelPadding: const EdgeInsets.symmetric(horizontal: 2),
+              label: label,
+              deleteIcon: disabled ? null : deleteIcon,
+              deleteIconColor: delIconColor,
+              disabledColor: const Color(0x16000000),
+              backgroundColor: isFilledBagde ? badgeColor : Colors.transparent,
+              side: BorderSide(
+                  color: outlineColor,
+                  style: isFilledBagde ? BorderStyle.none : BorderStyle.solid),
+              elevation: 0.0,
+              pressElevation: 0.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(badgeRadius.value)),
+              onDeleted: disabled ? null : () => onDeleted(item.value),
+              onPressed: () => onTap(index),
             );
           }).toList(),
         ),

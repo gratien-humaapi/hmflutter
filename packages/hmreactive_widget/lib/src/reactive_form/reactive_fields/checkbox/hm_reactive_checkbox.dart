@@ -12,13 +12,11 @@ class HMReactiveCheckBox extends ReactiveFormField<dynamic, bool> {
     HMRadius? radius,
     ShowErrorsFunction<dynamic>? showErrors,
     HMCheckBoxSize? size,
-    // required bool value,
     Color? color,
     void Function(bool value)? onChange,
   }) : super(
             key: key,
             formControlName: formControlName,
-            //  focusNode: focusNode,
             showErrors:
                 showErrors ?? (control) => control.dirty && control.invalid,
             builder: (ReactiveFormFieldState<dynamic, bool> field) {

@@ -3,10 +3,10 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class SelectProps extends ActionsPropsBase {
+class SelectProps extends PropsBase {
   SelectProps({
-    bool disabled = false,
-    bool hidden = false,
+super.disabled,
+      super.hidden,
     this.selectIcon,
     this.radius,
     required this.selectList,
@@ -26,7 +26,7 @@ class SelectProps extends ActionsPropsBase {
     this.selectItemStyle,
     this.selectedValueTextStyle,
     this.onChange,
-  }) : super(disabled, hidden);
+  }) ;
   final HMSelectSize? size;
   final Widget selectionPageTitle;
   final HMRadius? radius;

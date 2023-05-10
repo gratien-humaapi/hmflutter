@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -19,6 +21,10 @@ class HMAutocomplete extends HookWidget {
     this.fillColor,
     this.initialValue,
     this.modalRadius,
+    this.modalBackgroundColor,
+    this.modalBlur,
+    this.modalOverlayColor,
+    this.onClose,
     this.optionsPaddding,
     this.selectedIcon,
     required this.onSelected,
@@ -41,6 +47,10 @@ class HMAutocomplete extends HookWidget {
   final Color? fillColor;
   final double? modalRadius;
   final Widget? selectedIcon;
+  final Color? modalOverlayColor;
+  final Color? modalBackgroundColor;
+  final ImageFilter? modalBlur;
+  final void Function()? onClose;
   final TextStyle? optionsTextStyle;
   final EdgeInsets? optionsPaddding;
   final Color? selectedBgColor;
@@ -91,6 +101,10 @@ class HMAutocomplete extends HookWidget {
       absorbing: disabled,
       child: DetailsPage(
         radius: modalRadius,
+        backgroundColor: modalBackgroundColor,
+        blur: modalBlur,
+        onClose: onClose,
+        overlayColor: modalOverlayColor,
         destinationPage: _SelectPannel(
             initialValue: initialValue ?? '',
             selectedBgColor: activeOptionColor,

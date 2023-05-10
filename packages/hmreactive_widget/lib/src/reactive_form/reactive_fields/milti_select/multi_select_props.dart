@@ -3,10 +3,10 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class MultiSelectProps extends ActionsPropsBase {
+class MultiSelectProps extends PropsBase {
   MultiSelectProps({
-    final bool disabled = false,
-    final bool hidden = false,
+    super.disabled,
+    super.hidden,
     this.radius,
     // required this.multiSelectValue,
     this.selectIcon,
@@ -30,7 +30,7 @@ class MultiSelectProps extends ActionsPropsBase {
     this.inputIcon,
     this.selectedValueTextStyle,
     this.onChange,
-  }) : super(disabled, hidden);
+  });
 
   final HMSelectSize? size;
   final Widget selectionPageTitle;

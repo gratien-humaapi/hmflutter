@@ -3,6 +3,10 @@ import 'package:reactive_forms/reactive_forms.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'fieldmeta.dart';
 
+/// The hooks that create the form object.
+/// It takes three arguments, fieldGroups which is a `List` of `FieldGroups`,
+/// onChangeValidation a `boolean` which defines if the form displays errors
+/// when modifying or after pressing a button to submit the form.
 HMForm<TData> useForm<TData>(
     {required List<FieldGroup> fieldGroups,
     required bool onChangeValidation,
@@ -11,6 +15,7 @@ HMForm<TData> useForm<TData>(
   List<Map<String, dynamic>? Function(AbstractControl<dynamic>)> validators =
       [];
   final form = useState(fb.group({}));
+
   final isSubmitting = useState(false);
 
   useEffect(() {
@@ -33,23 +38,14 @@ HMForm<TData> useForm<TData>(
     return null;
   }, []);
 
-  // form = buildForm(fieldsMeta);
-  // print('here is form : ${form.value.value}');
-
   handleSubmit<TData>(void Function(TData data) onSubmit) async {
     isSubmitting.value = true;
-    // print('markAllas Touched');
     form.value.markAllAsTouched();
-    // await Future.delayed(const Duration(seconds: 5)).then(
-    //   (value) => print('yes submit'),
-    //   //SignUpConfirmationRoute().go(context),
-    // );
+
     if (!form.value.hasErrors) {
       final TData data = form.value.value as TData;
       onSubmit(data);
     }
-    // print('markAllas finish');
-    // isSubmitting.value = false;
   }
 
   HMForm<TData> methods = HMForm(

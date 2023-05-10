@@ -3,10 +3,10 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class SliderProps extends ActionsPropsBase {
+class SliderProps extends PropsBase {
   SliderProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     this.color,
     this.orientation = HMOrientation.horizontal,
     this.marks = const [],
@@ -15,7 +15,7 @@ class SliderProps extends ActionsPropsBase {
     this.max = 100.0,
     this.radius,
     this.onChange,
-  }) : super(disabled, hidden);
+  });
   List<HMSliderMark> marks;
   HMOrientation orientation;
 

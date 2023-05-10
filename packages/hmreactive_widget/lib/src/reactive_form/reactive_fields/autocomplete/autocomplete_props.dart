@@ -5,10 +5,10 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../props_base.dart';
 
-class AutocompleteProps extends ActionsPropsBase {
+class AutocompleteProps extends PropsBase {
   AutocompleteProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     this.radius,
     this.size,
     this.selectPanelDecoration,
@@ -25,7 +25,7 @@ class AutocompleteProps extends ActionsPropsBase {
     this.optionsViewBuilder,
     this.showErrors,
     this.optionsPaddding,
-  }) : super(disabled, hidden);
+  });
 
   final HMAutocompleteSize? size;
   final HMRadius? radius;

@@ -3,16 +3,16 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class CheckBoxProps extends ActionsPropsBase {
+class CheckBoxProps extends PropsBase {
   CheckBoxProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     this.color,
     this.radius,
     this.size = HMCheckBoxSize.md,
     this.label,
     this.onChange,
-  }) : super(disabled, hidden);
+  });
   final String? label;
 
   Color? color;

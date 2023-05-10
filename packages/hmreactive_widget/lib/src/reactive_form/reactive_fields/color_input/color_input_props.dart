@@ -1,13 +1,12 @@
-
 import '../../props_base.dart';
 
-class ColorInputProps extends ActionsPropsBase {
+class ColorInputProps extends PropsBase {
   ColorInputProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     this.inputRadius = 8,
     this.onChange,
-  }) : super(disabled, hidden);
+  });
   final double inputRadius;
   final void Function(String color)? onChange;
 }

@@ -11,7 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.6
-  hmwidget: ^0.0.3
+  # hmwidget: ^0.0.3
+  hmwidget:
+    path: "../hmwidget"
   http: ^0.13.5
   image_picker: ^0.8.7+4
   reactive_forms: ^14.3.0

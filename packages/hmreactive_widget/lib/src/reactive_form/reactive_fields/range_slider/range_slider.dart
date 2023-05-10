@@ -3,10 +3,10 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class RangeSliderProps extends ActionsPropsBase {
+class RangeSliderProps extends PropsBase {
   RangeSliderProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+      super.hidden,
     this.marks,
     this.orientation = HMOrientation.horizontal,
     required this.rangeValues,
@@ -16,7 +16,7 @@ class RangeSliderProps extends ActionsPropsBase {
     this.radius,
     this.size = HMSliderSize.md,
     this.onChange,
-  }) : super(disabled, hidden);
+  }) ;
 
   final List<HMSliderMark>? marks;
   final HMOrientation orientation;

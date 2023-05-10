@@ -171,7 +171,7 @@ class HMTextField extends HookWidget {
       textEditingController.value.copyWith(
         text: value,
         selection: TextSelection.collapsed(offset: value!.length),
-        composing: TextRange.empty,
+        // composing: TextRange.empty,
       );
     }
     return AbsorbPointer(
@@ -241,10 +241,14 @@ class HMTextField extends HookWidget {
                   ),
                   textCapitalization: TextCapitalization.sentences,
                   autocorrect: !(keyboardType == TextInputType.emailAddress),
-                  maxLength: maxLength,
-                  textAlignVertical: TextAlignVertical.center,
-                  inputFormatters: inputFormatters,
+                  // maxLength: 10,
+                  textAlignVertical: TextAlignVertical.top,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(maxLength),
+                    ...?inputFormatters
+                  ],
                   decoration: InputDecoration.collapsed(
+                    border: InputBorder.none,
                     hintText: hintText,
                     hintStyle: TextStyle(
                         color: Colors.grey,
@@ -288,9 +292,11 @@ class HMTextField extends HookWidget {
                   obscureText: !showPassword.value,
                   textInputAction: textInputAction,
                   autocorrect: false,
+                  maxLines: 1,
                   focusNode: focusNode,
-                  maxLength: maxLength,
                   decoration: InputDecoration.collapsed(
+                    // isCollapsed: true,
+                    border: InputBorder.none,
                     hintText: hintText,
                     hintStyle: TextStyle(
                         color: Colors.grey,
@@ -352,7 +358,6 @@ class HMTextField extends HookWidget {
                   keyboardType: TextInputType.number,
                   autocorrect: false,
                   focusNode: focusNode,
-                  maxLength: maxLength,
                   decoration: InputDecoration.collapsed(
                     hintText: hintText,
                     hintStyle: TextStyle(
@@ -361,6 +366,7 @@ class HMTextField extends HookWidget {
                         fontWeight: FontWeight.normal),
                   ),
                   inputFormatters: [
+                    LengthLimitingTextInputFormatter(maxLength),
                     FilteringTextInputFormatter.allow(
                         RegExp(r'[0-9]+[,.]{0,1}[0-9]*')),
                     TextInputFormatter.withFunction(
@@ -405,8 +411,10 @@ class HMTextField extends HookWidget {
                     focusNode: focusNode,
                     minLines: minLines,
                     maxLines: maxLines,
-                    maxLength: maxLength,
-                    inputFormatters: inputFormatters,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(maxLength),
+                      ...?inputFormatters
+                    ],
                     decoration: InputDecoration.collapsed(
                       hintText: hintText,
                       hintStyle: TextStyle(

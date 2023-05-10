@@ -8,21 +8,20 @@ class DetailsPage<T> extends HookWidget {
   const DetailsPage(
       {super.key,
       required this.child,
-      // required this.onChange,
-      // required this.onTap,
       this.onClose,
       this.overlayColor,
+      this.backgroundColor,
+      this.blur,
       this.radius,
       required this.destinationPage,
       required this.isModal});
   final Widget child;
-  // final T defaultValue;
-  // final void Function(T value) onChange;
-  // final void Function(T value) onTap;
   final void Function()? onClose;
   final bool isModal;
   final Color? overlayColor;
+  final Color? backgroundColor;
   final double? radius;
+  final ImageFilter? blur;
   final Widget destinationPage;
 
   Future<void> buildPage(BuildContext context) async {
@@ -47,12 +46,11 @@ class DetailsPage<T> extends HookWidget {
     await showCupertinoModalPopup(
       barrierColor: overlayColor ?? const Color(0xFFE0E0E0).withOpacity(0.3),
       context: context,
-      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+      filter: blur ?? ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       // isScrollControlled: true,
       useRootNavigator: true,
       barrierDismissible: true,
       semanticsDismissible: true,
-      // backgroundColor: Colors.yellow.shade200,
       // elevation: 0.0,
       // enableDrag: true,
 
@@ -61,12 +59,13 @@ class DetailsPage<T> extends HookWidget {
           heightFactor: 0.9,
           child: Dismissible(
             key: const Key('dismiss_modal_key'),
-            direction: DismissDirection
-                .down, // autoriser le défilement vers le bas pour fermer le popup
+            // autoriser le défilement vers le bas pour fermer le popup
+            direction: DismissDirection.down,
             onDismissed: (DismissDirection direction) {
               Navigator.pop(context);
             },
             child: Material(
+              color: backgroundColor ?? Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius:
                     BorderRadius.vertical(top: Radius.circular(radius ?? 8)),

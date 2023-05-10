@@ -2,6 +2,34 @@ import 'package:flutter/material.dart';
 
 import 'hmform_builder.dart';
 
+/// A class that wraps the MaterialApp to pass the context
+/// of the reactiveForm throughout the project.
+/// For example :
+/// ``` dart
+/// defineReativeField(HMFormBuilder builder) {
+///   ReactiveTextFieldRegister(builder);
+///   ReactiveImagePickerRegister(builder);
+///   ReactiveCheckboxRegister(builder);
+///   ReactiveSelectRegister(builder);
+/// }
+/// ```
+///
+///``` dart
+/// class MyApp extends StatelessWidget {
+///   const MyApp({super.key});
+
+///   @override
+///  Widget build(BuildContext context) {
+///     return  HMReactiveProvider(
+///       registerField: [defineReativeField],
+///       child: MaterialApp(
+///         home: HomePage(),
+///       ),
+///     );
+///   }
+/// }
+///  ```
+
 class HMReactiveProvider extends InheritedWidget {
   HMReactiveProvider(
       {super.key, required super.child, required this.registerField}) {

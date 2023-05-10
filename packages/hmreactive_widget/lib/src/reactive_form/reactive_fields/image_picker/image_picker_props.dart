@@ -3,16 +3,16 @@ import 'package:hmwidget/hmwidget.dart';
 
 import '../../props_base.dart';
 
-class ImagePickerProps extends ActionsPropsBase {
+class ImagePickerProps extends PropsBase {
   ImagePickerProps({
-    bool disabled = false,
-    bool hidden = false,
+    super.disabled,
+    super.hidden,
     this.isMultipleImage,
     this.hasCancelButton = true,
     this.imageSourceList,
     this.builder,
     this.onChange,
-  }) : super(disabled, hidden);
+  });
   final bool? isMultipleImage;
   final bool hasCancelButton;
   final List<ActionSheetItem> Function(
