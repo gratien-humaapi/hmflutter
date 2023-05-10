@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: hmwidget
+dependency_overrides:
+  hmwidget:
+    path: ..\\hmwidget
